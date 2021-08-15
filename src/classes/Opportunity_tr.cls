@@ -21,12 +21,14 @@ public with sharing class Opportunity_tr extends TriggerHandler{
    private void updateOpti(){
 
        List<OpportunityLineItem> listOptiLineItem = [
-               SELECT Id, OpportunityId, Product2Id, Product2.Name, Product2.Family, Product2.ProductCode, UnitPrice, Quantity, TotalPrice, ProductCode,PricebookEntryId
+               SELECT Id, OpportunityId, Product2Id, Product2.Name, Product2.Family,
+                       Product2.ProductCode, UnitPrice, Quantity, TotalPrice,
+                       ProductCode,PricebookEntryId
                FROM OpportunityLineItem
                WHERE OpportunityId =: listNew[0].Id
                AND PricebookEntryId != NULL
        ];
-       System.debug(listOptiLineItem);
+       //System.debug(listOptiLineItem);
        //Contract, Order, OrderItem, Asset 생성
        List<Contract> listContract = new List<Contract>();
        List<Order> listOrder = new List<Order>();
@@ -48,7 +50,7 @@ public with sharing class Opportunity_tr extends TriggerHandler{
            listContract.add(objContract);
            //Order에서 Contract의 id를 사용
            insert listContract;
-            System.debug(objContract.Id);
+//           System.debug(objContract.Id);
 //           Order 생성
            Order objOrder = new Order(
                    ContractId = objContract.Id,

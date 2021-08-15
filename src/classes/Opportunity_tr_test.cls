@@ -8,7 +8,11 @@ private class Opportunity_tr_test {
     static void opti_setup(){
         //Account 생성
         Account objAccount = new Account(Name = 'Trigger_Test_Account');
-        insert objAccount;
+        try{
+            insert objAccount;
+        }catch(Exception e){
+            objAccount.addError('objAccount insert Error : '+e);
+        }
         //Opportunity 생성
         List<Opportunity> listOpti = new List<Opportunity>();
         for(Integer i=0; i<5; i++){
@@ -47,7 +51,11 @@ private class Opportunity_tr_test {
                 Id = Test.getStandardPricebookId(),
                 IsActive = true
         );
-        update objPricebook2;
+        try{
+            insert objPricebook2;
+        }catch(Exception e){
+            objPricebook2.addError('objPricebook2 update Error : '+e);
+        }
         //Contract 생성
         List<Contract> listContract = new List<Contract>();
         for(Integer i=0; i<listOpti.size(); i++){

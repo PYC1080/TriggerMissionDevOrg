@@ -8,7 +8,11 @@ private class Order_tr_test {
     static void order_setup(){
         //Account 생성
         Account objAccount = new Account(Name = 'Trigger_Test_Account');
-        insert objAccount;
+        try{
+            insert objAccount;
+        }catch(Exception e){
+            objAccount.addError('objAccount insert Error : '+e);
+        }
         //Opportunity 생성
         Opportunity objOpti = new Opportunity(
                 Name='Trigger_Test_Opti',
@@ -17,20 +21,32 @@ private class Order_tr_test {
                 AccountId = objAccount.Id,
                 isApproved__c = true
         );
-        insert objOpti;
+        try{
+            insert objOpti;
+        }catch(Exception e){
+            objOpti.addError('objOpti insert Error : '+e);
+        }
         //Product2 생성
         Product2 objProduct2 = new Product2(
                 Name = 'Trigger_Test_Product2 HW',
                 Family = 'Hardware',
                 ProductCode = 'Hardware'
         );
-        insert objProduct2;
+        try{
+            insert objProduct2;
+        }catch(Exception e){
+            objProduct2.addError('objProduct2 insert Error : '+e);
+        }
         //PriceBook 생성성
         Pricebook2 objPricebook2 = new Pricebook2(
                 Id = Test.getStandardPricebookId(),
                 IsActive = true
         );
-        update objPricebook2;
+        try{
+            insert objPricebook2;
+        }catch(Exception e){
+            objPricebook2.addError('objPricebook2 insert Error : '+e);
+        }
         //Contract 생성
         Contract objContract = new Contract(
                 Name = 'Trigger_Test_Contract',
@@ -43,7 +59,11 @@ private class Order_tr_test {
                 ),
                 ContractTerm = 12
         );
-        insert objContract;
+        try{
+            insert objContract;
+        }catch(Exception e){
+            objContract.addError('objContract insert Error : '+e);
+        }
         //PricebookEntry 생성
         PricebookEntry objPricebookEntry = new PricebookEntry(
                 Pricebook2Id = objPricebook2.Id,
@@ -51,7 +71,11 @@ private class Order_tr_test {
                 UnitPrice = 10000,
                 IsActive = true
         );
-        insert objPricebookEntry;
+        try{
+            insert objPricebookEntry;
+        }catch(Exception e){
+            objPricebookEntry.addError('objPricebookEntry insert Error : '+e);
+        }
         //OpportunityLineItem 생성
         OpportunityLineItem objOptiLineItem = new OpportunityLineItem(
                 PricebookEntryId = objPricebookEntry.Id,
@@ -60,7 +84,11 @@ private class Order_tr_test {
                 Quantity = 10 ,
                 TotalPrice = objPricebookEntry.UnitPrice * (10)
         );
-        insert objOptiLineItem;
+        try{
+            insert objOptiLineItem;
+        }catch(Exception e){
+            objOptiLineItem.addError('objOptiLineItem insert Error : '+e);
+        }
         //Order 생성
         Order objOrder = new Order(
                 Name = 'Trigger_Test_Order',
@@ -75,7 +103,11 @@ private class Order_tr_test {
                         Date.today().day()
                 )
         );
-        insert objOrder;
+        try{
+            insert objOrder;
+        }catch(Exception e){
+            objOrder.addError('objOrder insert Error : '+e);
+        }
         //OrderItem 생성
         OrderItem objOrderItem = new OrderItem(
                 PricebookEntryId = objPricebookEntry.Id,
@@ -84,14 +116,22 @@ private class Order_tr_test {
                 UnitPrice = objOptiLineItem.TotalPrice,
                 Quantity = objOptiLineItem.Quantity
         );
-        insert objOrderItem;
+        try{
+            insert objOrderItem;
+        }catch(Exception e){
+            objOrderItem.addError('objOrderItem insert Error : '+e);
+        }
         //Asset 생성
         Asset objAsset = new Asset(
                 Name = 'Trigger_Test_Asset',
                 AccountId = objAccount.Id,
                 Product2Id = objProduct2.Id
         );
-        insert objAsset;
+        try{
+            insert objAsset;
+        }catch(Exception e){
+            objAsset.addError('objAsset insert Error : '+e);
+        }
     }
     @IsTest
     static void testBehavior() {
